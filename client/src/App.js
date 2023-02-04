@@ -17,13 +17,14 @@ import ForgotPassword from "./components/body/auth/ForgotPassword";
 import axios from "axios";
 import ResetPassword from "./components/body/auth/ResetPassword";
 import Profile from "./components/body/profile/Profile";
+import EditUser from "./components/body/profile/EditUser";
 
 function App() {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const auth = useSelector((state) => state.auth);
 
-    const { isLogged } = auth;
+    const { isLogged, isAdmin } = auth;
 
     useEffect(() => {
         const firstLogin = localStorage.getItem("firstLogin");
@@ -62,6 +63,7 @@ function App() {
                     />
                     <Route path="/register" element={isLogged ? <NotFound /> : <Register />} exact />
                     <Route path="/profile" element={isLogged ? <Profile /> : <NotFound />} exact />
+                    <Route path="/edit_users/:id" element={isAdmin ? <EditUser /> : <NotFound />} exact />
                     <Route path="/forgot_password" element={isLogged ? <NotFound /> : <ForgotPassword />} exact />
                     <Route path="/user/reset/:token" element={isLogged ? <NotFound /> : <ResetPassword />} exact />
                     <Route
